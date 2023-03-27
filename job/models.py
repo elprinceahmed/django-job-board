@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.text import slugify
 
 # Create your models here.
 
@@ -25,6 +26,12 @@ class Job(models.Model):    # table
     experinse = models.IntegerField(default=1)
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
     image = models.ImageField(upload_to=image_upload)
+
+    slug = models.SlugField(blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Job, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.title
