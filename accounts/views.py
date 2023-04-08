@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse
 from .forms import SignupForm, UserForm, ProfileForm
 from django.contrib.auth import authenticate, login
@@ -15,7 +15,7 @@ def signup(request):
             password = form.cleaned_data['password1']
             user = authenticate(username=username, password=password)
             login(request, user)
-            return redirect('/accounts/profile')
+            return redirect('accounts/profile')
     else:
         form = SignupForm()
     return render(request, 'registration/signup.html', {'form': form})
